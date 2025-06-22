@@ -1,0 +1,3370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK ACCOUNTING</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s;
+        }
+        .container {
+            width: 95%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 4px;
+            width: 200px;
+            text-align: left;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .hidden {
+            display: none;
+        }
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .dashboard-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: calc(33% - 10px);
+            text-align: center;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dashboard-btn:hover {
+            background-color: #45a049;
+        }
+        .company-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4CAF50;
+        }
+        .vertical-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-col {
+            flex: 1;
+        }
+        .item-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .item-table th {
+            background-color: #f2f2f2;
+        }
+        .summary-table {
+            width: 50%;
+            float: right;
+            margin-top: 20px;
+        }
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        .section-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .section-content {
+            margin-top: 15px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .back-btn {
+            background-color: #6c757d;
+        }
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+        .section-nav-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 4px;
+            width: auto;
+        }
+        .settings-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .settings-menu {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: white;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 250px;
+        }
+        .settings-menu.show {
+            display: block;
+        }
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .about-box {
+            background-color: #e7f5ff;
+            border-left: 5px solid #0d6efd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .entry-mode-color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 5px;
+            cursor: pointer;
+            border: 2px solid #ddd;
+        }
+        .feature-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            width: calc(33% - 10px);
+            text-align: center;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        .feature-btn:hover {
+            background-color: #45a049;
+        }
+        .company-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .company-header h2 {
+            margin: 0;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 28px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .company-header p {
+            margin: 5px 0 0 0;
+            font-size: 16px;
+            color: white;
+        }
+        .company-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .company-header-text {
+            flex: 1;
+            text-align: center;
+        }
+        .company-header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .company-header-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .company-header-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .pin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        .pin-modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 300px;
+            max-width: 90%;
+        }
+        .pin-modal-title {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        .pin-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .pin-tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .pin-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .pin-tab.active {
+            border-bottom: 2px solid #4CAF50;
+            font-weight: bold;
+        }
+        .item-details {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .item-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .item-details th, .item-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .item-details th {
+            background-color: #f2f2f2;
+        }
+        @media (max-width: 768px) {
+            .dashboard-btn, .feature-btn {
+                width: calc(50% - 10px);
+            }
+            .form-row {
+                flex-direction: column;
+            }
+            .summary-table {
+                width: 100%;
+                float: none;
+            }
+            .company-header-container {
+                flex-direction: column;
+            }
+            .company-header-actions {
+                margin-top: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .dashboard-btn, .feature-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Company Header (Shown after company selection) -->
+        <div id="companyHeader" class="company-header hidden">
+            <div class="company-header-container">
+                <div class="company-header-text">
+                    <h2 id="currentCompanyName"></h2>
+                    <p id="dashboardPeriod"></p>
+                </div>
+                <div class="company-header-actions">
+                    <button class="company-header-btn" onclick="openPinSettings()">🔒</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="companySection">
+            <div class="header">
+                <h1>AK ACCOUNTING</h1>
+            </div>
+
+            <!-- Company Section -->
+            <button class="btn" onclick="showCreateCompany()">Create Company</button>
+            <button class="btn" onclick="showSelectCompany()">Select Company</button>
+
+            <!-- Create Company Form -->
+            <div id="createCompanyForm" class="hidden">
+                <h2>Create New Company</h2>
+                <div class="vertical-form">
+                    <div class="form-group">
+                        <label for="companyName">Company Name:</label>
+                        <input type="text" id="companyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyAddress">Address:</label>
+                        <input type="text" id="companyAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyMobile">Mobile No:</label>
+                        <input type="text" id="companyMobile" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyPan">PAN Card No:</label>
+                        <input type="text" id="companyPan" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyGst">GSTIN No:</label>
+                        <input type="text" id="companyGst" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="startYear">Start Year:</label>
+                                <input type="number" id="startYear" required>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="endYear">End Year:</label>
+                                <input type="number" id="endYear" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn" onclick="saveCompany()">Save Company</button>
+                    <button class="btn" onclick="clearCompanyForm()">Clear Form</button>
+                    <button class="btn back-btn" onclick="hideCreateCompany()">Back</button>
+                </div>
+
+                <!-- Company Table -->
+                <input type="text" class="search-bar" placeholder="Search companies..." onkeyup="searchCompanies()">
+                <table id="companyTable">
+                    <thead>
+                        <tr>
+                            <th>Serial No</th>
+                            <th>Company Name</th>
+                            <th>Address</th>
+                            <th>Mobile No</th>
+                            <th>PAN No</th>
+                            <th>GSTIN No</th>
+                            <th>Period</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="companyTableBody">
+                        <!-- Company data will be inserted here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Select Company Form -->
+            <div id="selectCompanyForm" class="hidden">
+                <h2>Select Company</h2>
+                <div class="form-group">
+                    <label for="selectCompany">Select Company:</label>
+                    <select id="selectCompany" onchange="loadSelectedCompany()">
+                        <option value="">-- Select Company --</option>
+                        <!-- Companies will be loaded here dynamically -->
+                    </select>
+                </div>
+                <div id="selectedCompanyInfo" class="hidden">
+                    <div class="company-info">
+                        <h3 id="displayCompanyName"></h3>
+                        <div class="form-group">
+                            <label for="selectPeriod">Select Period:</label>
+                            <select id="selectPeriod">
+                                <!-- Periods will be loaded here dynamically -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="proceedToDashboard()">Proceed</button>
+                        <button class="btn back-btn" onclick="hideSelectCompany()">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard (Hidden Initially) -->
+        <div id="mainDashboard" class="hidden">
+            <div class="dashboard-container">
+                <button class="feature-btn" onclick="enterSectionOnly('createLedgerSection')">CREATE LEDGER</button>
+                <button class="feature-btn" onclick="enterSectionOnly('stockSection')">STOCK</button>
+                <button class="feature-btn" onclick="enterSectionOnly('purchaseSection')">PURCHASE</button>
+                <button class="feature-btn" onclick="enterSectionOnly('deliveryChallanSection')">DELIVERY CHALLAN</button>
+                <button class="feature-btn" onclick="enterSectionOnly('salesSection')">SALES</button>
+                <button class="feature-btn" onclick="enterSectionOnly('pointOfSalesSection')">POINT OF SALES</button>
+                <button class="feature-btn" onclick="enterSectionOnly('journalEntrySection')">JOURNAL ENTRY</button>
+                <button class="feature-btn" onclick="enterSectionOnly('bankTransactionSection')">BANK TRANSACTION</button>
+                <button class="feature-btn" onclick="enterSectionOnly('closingStockSection')">CLOSING STOCK</button>
+                <button class="feature-btn" onclick="enterSectionOnly('partyLedgerSection')">PARTY LEDGER</button>
+                <button class="feature-btn" onclick="enterSectionOnly('profitAndLossSection')">PROFIT AND LOSS A/C</button>
+                <button class="feature-btn" onclick="enterSectionOnly('companyGrowthSection')">COMPANY GROWTH LEVEL</button>
+            </div>
+        </div>
+
+        <!-- Create Ledger Section -->
+        <div id="createLedgerSection" class="hidden">
+            <div class="section-header">
+                <h2>Create Ledger</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-title">Group</div>
+                    <button class="btn" onclick="showGroupForm()">+ Group</button>
+                </div>
+                <div id="groupForm" class="hidden section-content">
+                    <h3>Add Group</h3>
+                    <div class="vertical-form">
+                        <div class="form-group">
+                            <label for="groupName">Group Name:</label>
+                            <input type="text" id="groupName" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="saveGroup()">Save</button>
+                        <button class="btn" onclick="clearGroupForm()">Clear Form</button>
+                        <button class="btn back-btn" onclick="hideGroupForm()">Back</button>
+                    </div>
+
+                    <!-- Group Table -->
+                    <input type="text" class="search-bar" placeholder="Search groups..." onkeyup="searchGroups()">
+                    <table id="groupTable">
+                        <thead>
+                            <tr>
+                                <th>Serial No</th>
+                                <th>Group Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="groupTableBody">
+                            <!-- Group data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-title">Ledger</div>
+                    <button class="btn" onclick="showLedgerForm()">+ Ledger</button>
+                </div>
+                <div id="ledgerForm" class="hidden section-content">
+                    <h3>Add Ledger</h3>
+                    <div class="vertical-form">
+                        <div class="form-group">
+                            <label for="ledgerName">Name:</label>
+                            <input type="text" id="ledgerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ledgerGroup">Group:</label>
+                            <select id="ledgerGroup" required onchange="checkBankGroup()">
+                                <!-- Groups will be loaded here dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ledgerAddress">Address:</label>
+                            <input type="text" id="ledgerAddress">
+                        </div>
+                        <div class="form-group">
+                            <label for="ledgerState">State:</label>
+                            <input type="text" id="ledgerState">
+                        </div>
+                        <div class="form-group">
+                            <label for="ledgerPincode">Pin Code:</label>
+                            <input type="text" id="ledgerPincode">
+                        </div>
+                        <div class="form-group">
+                            <label for="ledgerMobile">Mobile No:</label>
+                            <input type="text" id="ledgerMobile">
+                        </div>
+                        <div class="form-group">
+                            <label id="ledgerAccountLabel" for="ledgerPan">PAN/IT No:</label>
+                            <input type="text" id="ledgerPan">
+                        </div>
+                        <div class="form-group">
+                            <label id="ledgerGstLabel" for="ledgerGst">GSTIN No:</label>
+                            <input type="text" id="ledgerGst">
+                        </div>
+                        <div class="form-group">
+                            <label for="openingBalance">Opening Balance:</label>
+                            <input type="number" id="openingBalance" value="0">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="saveLedger()">Save</button>
+                        <button class="btn" onclick="clearLedgerForm()">Clear Form</button>
+                        <button class="btn back-btn" onclick="hideLedgerForm()">Back</button>
+                    </div>
+
+                    <!-- Ledger Table -->
+                    <input type="text" class="search-bar" placeholder="Search ledgers..." onkeyup="searchLedgers()">
+                    <table id="ledgerTable">
+                        <thead>
+                            <tr>
+                                <th>Serial No</th>
+                                <th>Name</th>
+                                <th>Group</th>
+                                <th>Address</th>
+                                <th>Mobile No</th>
+                                <th id="ledgerTableGstHeader">GSTIN No</th>
+                                <th>Opening Balance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledgerTableBody">
+                            <!-- Ledger data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-title">Stock Group</div>
+                    <button class="btn" onclick="showStockGroupForm()">+ Stock Group</button>
+                </div>
+                <div id="stockGroupForm" class="hidden section-content">
+                    <h3>Add Stock Group</h3>
+                    <div class="vertical-form">
+                        <div class="form-group">
+                            <label for="stockGroupName">Group Name:</label>
+                            <input type="text" id="stockGroupName" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="saveStockGroup()">Save</button>
+                        <button class="btn" onclick="clearStockGroupForm()">Clear Form</button>
+                        <button class="btn back-btn" onclick="hideStockGroupForm()">Back</button>
+                    </div>
+
+                    <!-- Stock Group Table -->
+                    <input type="text" class="search-bar" placeholder="Search stock groups..." onkeyup="searchStockGroups()">
+                    <table id="stockGroupTable">
+                        <thead>
+                            <tr>
+                                <th>Serial No</th>
+                                <th>Stock Group Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockGroupTableBody">
+                            <!-- Stock Group data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-title">Category/Unit</div>
+                    <button class="btn" onclick="showCategoryForm()">+ Category</button>
+                </div>
+                <div id="categoryForm" class="hidden section-content">
+                    <h3>Add Category/Unit</h3>
+                    <div class="vertical-form">
+                        <div class="form-group">
+                            <label for="unitName">Unit Name:</label>
+                            <input type="text" id="unitName" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="saveUnit()">Save</button>
+                        <button class="btn" onclick="clearUnitForm()">Clear Form</button>
+                        <button class="btn back-btn" onclick="hideCategoryForm()">Back</button>
+                    </div>
+
+                    <!-- Category Table -->
+                    <input type="text" class="search-bar" placeholder="Search units..." onkeyup="searchUnits()">
+                    <table id="categoryTable">
+                        <thead>
+                            <tr>
+                                <th>Serial No</th>
+                                <th>Unit Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoryTableBody">
+                            <!-- Unit data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stock Section -->
+        <div id="stockSection" class="hidden">
+            <div class="section-header">
+                <h2>Stock Management</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-title">Stock Items</div>
+                    <button class="btn" onclick="showStockForm()">+ Add Stock Item</button>
+                </div>
+                <div id="stockForm" class="hidden section-content">
+                    <h3>Add Stock Item</h3>
+                    <div class="vertical-form">
+                        <div class="form-group">
+                            <label for="itemName">Item Name:</label>
+                            <input type="text" id="itemName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="hsnCode">HSN Code:</label>
+                            <input type="text" id="hsnCode">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemQty">Quantity:</label>
+                            <input type="number" id="itemQty" required onchange="calculateStockTotal()">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemRate">Rate:</label>
+                            <input type="number" id="itemRate" required onchange="calculateStockTotal()">
+                        </div>
+                        <div class="form-group">
+                            <label for="itemUnit">Unit:</label>
+                            <select id="itemUnit" required>
+                                <!-- Units will be loaded here dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="totalAmount">Total Amount:</label>
+                            <input type="number" id="totalAmount" readonly>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="saveStockItem()">Save</button>
+                        <button class="btn" onclick="clearStockForm()">Clear Form</button>
+                        <button class="btn back-btn" onclick="hideStockForm()">Back</button>
+                    </div>
+
+                    <!-- Stock Table -->
+                    <input type="text" class="search-bar" placeholder="Search stock items..." onkeyup="searchStockItems()">
+                    <table id="stockTable">
+                        <thead>
+                            <tr>
+                                <th>Serial No</th>
+                                <th>Item Name</th>
+                                <th>HSN Code</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th>Unit</th>
+                                <th>Total Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockTableBody">
+                            <!-- Stock data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purchase Section -->
+        <div id="purchaseSection" class="hidden">
+            <div class="section-header">
+                <h2>Purchase Management</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-title">Purchases</div>
+                    <button class="btn" onclick="showPurchaseForm()">+ Add Purchase</button>
+                </div>
+                <div id="purchaseForm" class="hidden section-content">
+                    <h3>Add Purchase</h3>
+                    <div class="vertical-form">
+                        <div class="form-group">
+                            <label for="purchaseDate">Date:</label>
+                            <input type="date" id="purchaseDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="purchaseParty">Party:</label>
+                            <select id="purchaseParty" required>
+                                <!-- Parties will be loaded here dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="purchaseInvoiceNo">Invoice No:</label>
+                            <input type="text" id="purchaseInvoiceNo" required>
+                        </div>
+                        
+                        <!-- Purchase Items -->
+                        <h4>Add Items</h4>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="purchaseItem">Item:</label>
+                                    <select id="purchaseItem">
+                                        <!-- Items will be loaded here dynamically -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="purchaseQty">Quantity:</label>
+                                    <input type="number" id="purchaseQty" value="1">
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="purchaseRate">Rate:</label>
+                                    <input type="number" id="purchaseRate" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label for="purchaseGstType">GST Type:</label>
+                                    <select id="purchaseGstType">
+                                        <option value="cgst_sgst">CGST+SGST</option>
+                                        <option value="igst">IGST</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="purchaseGst">GST Rate:</label>
+                                    <select id="purchaseGst">
+                                        <option value="0">0%</option>
+                                        <option value="2.5">2.5%</option>
+                                        <option value="2.5+2.5">2.5+2.5%</option>
+                                        <option value="5">5%</option>
+                                        <option value="9">9%</option>
+                                        <option value="9+9">9+9%</option>
+                                        <option value="14">14%</option>
+                                        <option value="14+14">14+14%</option>
+                                        <option value="18">18%</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addPurchaseItem()">Add Item</button>
+                        
+                        <!-- Purchase Items Table -->
+                        <table class="item-table" id="purchaseItemsTable">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                    <th>GST Type</th>
+                                    <th>GST Rate</th>
+                                    <th>Tax Amt</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="purchaseItemsTableBody">
+                                <!-- Purchase items will be added here -->
+                            </tbody>
+                        </table>
+                        
+                        <!-- Purchase Summary -->
+                        <div class="clearfix">
+                            <table class="summary-table">
+                                <tr>
+                                    <th>Subtotal:</th>
+                                    <td id="purchaseSubtotal">0.00</td>
+                                </tr>
+                                <tr>
+                                    <th>Discount:</th>
+                                    <td><input type="number" id="purchaseDiscount" value="0" onchange="calculatePurchaseTotal()"></td>
+                                </tr>
+                                <tr>
+                                    <th>Freight:</th>
+                                    <td><input type="number" id="purchaseFreight" value="0" onchange="calculatePurchaseTotal()"></td>
+                                </tr>
+                                <tr>
+                                    <th>Tax Amount:</th>
+                                    <td id="purchaseTaxAmount">0.00</td>
+                                </tr>
+                                <tr>
+                                    <th>Round Off:</th>
+                                    <td id="purchaseRoundOff">0.00</td>
+                                </tr>
+                                <tr>
+                                    <th>Grand Total:</th>
+                                    <td id="purchaseGrandTotal">0.00</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="savePurchase()">Save Purchase</button>
+                        <button class="btn" onclick="clearPurchaseForm()">Clear Form</button>
+                        <button class="btn back-btn" onclick="hidePurchaseForm()">Back</button>
+                    </div>
+                    
+                    <!-- Purchase Table -->
+                    <input type="text" class="search-bar" placeholder="Search purchases..." onkeyup="searchPurchases()">
+                    <table id="purchaseTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Invoice No</th>
+                                <th>Party</th>
+                                <th>Subtotal</th>
+                                <th>Tax</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchaseTableBody">
+                            <!-- Purchase data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sales Section -->
+        <div id="salesSection" class="hidden">
+            <div class="section-header">
+                <h2>Sales Management</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            
+            <div class="section-container">
+                <div class="section-header">
+                    <div class="section-title">Sales</div>
+                    <button class="btn" onclick="showSalesForm()">+ Add Sale</button>
+                </div>
+                <div id="salesForm" class="hidden section-content">
+                    <h3>Add Sale</h3>
+                    <div class="vertical-form">
+                        <div class="form-group">
+                            <label for="salesDate">Date:</label>
+                            <input type="date" id="salesDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="salesParty">Party:</label>
+                            <select id="salesParty" required>
+                                <!-- Parties will be loaded here dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="salesInvoiceNo">Invoice No:</label>
+                            <input type="text" id="salesInvoiceNo" required>
+                        </div>
+                        
+                        <!-- Sales Items -->
+                        <h4>Add Items</h4>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="salesItem">Item:</label>
+                                    <select id="salesItem">
+                                        <!-- Items will be loaded here dynamically -->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="salesQty">Quantity:</label>
+                                    <input type="number" id="salesQty" value="1">
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="salesRate">Rate:</label>
+                                    <input type="number" id="salesRate" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label for="salesGstType">GST Type:</label>
+                                    <select id="salesGstType">
+                                        <option value="cgst_sgst">CGST+SGST</option>
+                                        <option value="igst">IGST</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="salesGst">GST Rate:</label>
+                                    <select id="salesGst">
+                                        <option value="0">0%</option>
+                                        <option value="2.5">2.5%</option>
+                                        <option value="2.5+2.5">2.5+2.5%</option>
+                                        <option value="5">5%</option>
+                                        <option value="9">9%</option>
+                                        <option value="9+9">9+9%</option>
+                                        <option value="14">14%</option>
+                                        <option value="14+14">14+14%</option>
+                                        <option value="18">18%</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="addSalesItem()">Add Item</button>
+                        
+                        <!-- Sales Items Table -->
+                        <table class="item-table" id="salesItemsTable">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                    <th>GST Type</th>
+                                    <th>GST Rate</th>
+                                    <th>Tax Amt</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesItemsTableBody">
+                                <!-- Sales items will be added here -->
+                            </tbody>
+                        </table>
+                        
+                        <!-- Sales Summary -->
+                        <div class="clearfix">
+                            <table class="summary-table">
+                                <tr>
+                                    <th>Subtotal:</th>
+                                    <td id="salesSubtotal">0.00</td>
+                                </tr>
+                                <tr>
+                                    <th>Discount:</th>
+                                    <td><input type="number" id="salesDiscount" value="0" onchange="calculateSalesTotal()"></td>
+                                </tr>
+                                <tr>
+                                    <th>Freight:</th>
+                                    <td><input type="number" id="salesFreight" value="0" onchange="calculateSalesTotal()"></td>
+                                </tr>
+                                <tr>
+                                    <th>Tax Amount:</th>
+                                    <td id="salesTaxAmount">0.00</td>
+                                </tr>
+                                <tr>
+                                    <th>Round Off:</th>
+                                    <td id="salesRoundOff">0.00</td>
+                                </tr>
+                                <tr>
+                                    <th>Grand Total:</th>
+                                    <td id="salesGrandTotal">0.00</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" onclick="saveSale()">Save Sale</button>
+                        <button class="btn" onclick="clearSalesForm()">Clear Form</button>
+                        <button class="btn back-btn" onclick="hideSalesForm()">Back</button>
+                    </div>
+                    
+                    <!-- Sales Table -->
+                    <input type="text" class="search-bar" placeholder="Search sales..." onkeyup="searchSales()">
+                    <table id="salesTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Invoice No</th>
+                                <th>Party</th>
+                                <th>Subtotal</th>
+                                <th>Tax</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody">
+                            <!-- Sales data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Point of Sales Section -->
+        <div id="pointOfSalesSection" class="hidden">
+            <div class="section-header">
+                <h2>Point of Sales</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Point of Sales functionality will be implemented here.</p>
+        </div>
+
+        <!-- Delivery Challan Section -->
+        <div id="deliveryChallanSection" class="hidden">
+            <div class="section-header">
+                <h2>Delivery Challan</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Delivery Challan functionality will be implemented here.</p>
+        </div>
+
+        <!-- Journal Entry Section -->
+        <div id="journalEntrySection" class="hidden">
+            <div class="section-header">
+                <h2>Journal Entry</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Journal Entry functionality will be implemented here.</p>
+        </div>
+
+        <!-- Bank Transaction Section -->
+        <div id="bankTransactionSection" class="hidden">
+            <div class="section-header">
+                <h2>Bank Transaction</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Bank Transaction functionality will be implemented here.</p>
+        </div>
+
+        <!-- Closing Stock Section -->
+        <div id="closingStockSection" class="hidden">
+            <div class="section-header">
+                <h2>Closing Stock</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Closing Stock functionality will be implemented here.</p>
+        </div>
+
+        <!-- Party Ledger Section -->
+        <div id="partyLedgerSection" class="hidden">
+            <div class="section-header">
+                <h2>Party Ledger</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Party Ledger functionality will be implemented here.</p>
+        </div>
+
+        <!-- Profit and Loss Section -->
+        <div id="profitAndLossSection" class="hidden">
+            <div class="section-header">
+                <h2>Profit and Loss Account</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Profit and Loss Account functionality will be implemented here.</p>
+        </div>
+
+        <!-- Company Growth Section -->
+        <div id="companyGrowthSection" class="hidden">
+            <div class="section-header">
+                <h2>Company Growth Level</h2>
+                <button class="section-nav-btn" onclick="showDashboard()">Back to Dashboard</button>
+            </div>
+            <p>Company Growth Level functionality will be implemented here.</p>
+        </div>
+
+        <!-- Pin Settings Modal -->
+        <div class="pin-modal" id="pinModal">
+            <div class="pin-modal-content">
+                <h3 class="pin-modal-title" id="pinModalTitle">PIN Settings</h3>
+                
+                <div class="pin-tabs">
+                    <div class="pin-tab active" onclick="showPinTab('create')" id="createPinTab">Create</div>
+                    <div class="pin-tab" onclick="showPinTab('change')" id="changePinTab">Change</div>
+                    <div class="pin-tab" onclick="showPinTab('delete')" id="deletePinTab">Delete</div>
+                </div>
+                
+                <div id="pinCreateForm">
+                    <div class="form-group">
+                        <label for="newPin">New PIN:</label>
+                        <input type="password" id="newPin" maxlength="4" placeholder="Enter 4-digit PIN">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPin">Confirm PIN:</label>
+                        <input type="password" id="confirmPin" maxlength="4" placeholder="Confirm 4-digit PIN">
+                    </div>
+                </div>
+                <div id="pinChangeForm" class="hidden">
+                    <div class="form-group">
+                        <label for="oldPin">Old PIN:</label>
+                        <input type="password" id="oldPin" maxlength="4" placeholder="Enter old PIN">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPinChange">New PIN:</label>
+                        <input type="password" id="newPinChange" maxlength="4" placeholder="Enter new PIN">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPinChange">Confirm PIN:</label>
+                        <input type="password" id="confirmPinChange" maxlength="4" placeholder="Confirm new PIN">
+                    </div>
+                </div>
+                <div id="pinDeleteForm" class="hidden">
+                    <div class="form-group">
+                        <label for="deletePin">Enter PIN:</label>
+                        <input type="password" id="deletePin" maxlength="4" placeholder="Enter PIN to delete">
+                    </div>
+                </div>
+                <div class="pin-modal-actions">
+                    <button class="btn back-btn" onclick="closePinModal()">Cancel</button>
+                    <button class="btn" id="pinActionBtn" onclick="createPin()">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Button -->
+        
+<!-- Home Button at bottom near settings -->
+<div class="settings-btn" onclick="toggleSettingsMenu()">⚙️</div>
+<div class="settings-btn" style="bottom: 80px;" onclick="goBackToCompanySection()">🏠</div>
+
+        
+        <!-- Settings Menu -->
+        <div class="settings-menu" id="settingsMenu">
+            <h3>Settings</h3>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4>Change Background Color</h4>
+                <button class="btn back-btn" onclick="toggleSettingsMenu()">🔙 Back</button>
+            </div>
+            
+            <div>
+                <div class="color-option" style="background-color: #f5f5f5;" onclick="changeBackgroundColor('#f5f5f5')"></div>
+                <div class="color-option" style="background-color: #ffebee;" onclick="changeBackgroundColor('#ffebee')"></div>
+                <div class="color-option" style="background-color: #e8f5e9;" onclick="changeBackgroundColor('#e8f5e9')"></div>
+                <div class="color-option" style="background-color: #e3f2fd;" onclick="changeBackgroundColor('#e3f2fd')"></div>
+                <div class="color-option" style="background-color: #fff8e1;" onclick="changeBackgroundColor('#fff8e1')"></div>
+                <div class="color-option" style="background-color: #fce4ec;" onclick="changeBackgroundColor('#fce4ec')"></div>
+            </div>
+            
+            <h4>Change Entry Mode Color</h4>
+            <div>
+                <div class="entry-mode-color-option" style="background-color: #ff0000;" onclick="changeEntryModeColor('#ff0000')"></div>
+                <div class="entry-mode-color-option" style="background-color: #0000ff;" onclick="changeEntryModeColor('#0000ff')"></div>
+                <div class="entry-mode-color-option" style="background-color: #ff69b4;" onclick="changeEntryModeColor('#ff69b4')"></div>
+                <div class="entry-mode-color-option" style="background-color: #ffa500;" onclick="changeEntryModeColor('#ffa500')"></div>
+                <div class="entry-mode-color-option" style="background-color: #008000;" onclick="changeEntryModeColor('#008000')"></div>
+            </div>
+            
+            <h4>Change Feature Button Color</h4>
+            <div>
+                <div class="entry-mode-color-option" style="background-color: #ff0000;" onclick="changeFeatureButtonColor('#ff0000')"></div>
+                <div class="entry-mode-color-option" style="background-color: #0000ff;" onclick="changeFeatureButtonColor('#0000ff')"></div>
+                <div class="entry-mode-color-option" style="background-color: #ff69b4;" onclick="changeFeatureButtonColor('#ff69b4')"></div>
+                <div class="entry-mode-color-option" style="background-color: #ffa500;" onclick="changeFeatureButtonColor('#ffa500')"></div>
+                <div class="entry-mode-color-option" style="background-color: #008000;" onclick="changeFeatureButtonColor('#008000')"></div>
+            </div>
+            
+            <div class="warning-box">
+                <h4>⚠️ Warning</h4>
+                <p>If you delete or clear cache of this app then there is no way to recover data later so please save your data</p>
+            </div>
+            
+            <div class="about-box">
+                <h4>About</h4>
+                <p>AK ACCOUNTING</p>
+                <p>Contact If any problem: <a href="mailto:problemissuesolve@gmail.com">problemissuesolve@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data storage (in a real app, you would use a database)
+        let companies = [];
+        let groups = [];
+        let ledgers = [];
+        let stockGroups = [];
+        let units = [];
+        let stockItems = [];
+        let purchases = [];
+        let sales = [];
+        let currentCompany = null;
+        let currentPeriod = null;
+
+        // Temporary storage for current purchase/sale items
+        let currentPurchaseItems = [];
+        let currentSalesItems = [];
+
+        
+function enterSectionOnly(sectionId) {
+    const allSections = document.querySelectorAll('[id$="Section"]');
+    allSections.forEach(sec => sec.classList.add('hidden'));
+    document.getElementById(sectionId).classList.remove('hidden');
+}
+
+
+        // PIN management
+        let appPin = localStorage.getItem('appPin') || null;
+        let currentPinAction = 'create'; // 'create', 'change', 'delete'
+        
+        // Track currently editing item
+        let currentlyEditingId = null;
+
+        // Toggle settings menu
+        function toggleSettingsMenu() {
+            document.getElementById('settingsMenu').classList.toggle('show');
+        }
+
+        // Change background color
+        function changeBackgroundColor(color) {
+            document.body.style.backgroundColor = color;
+            localStorage.setItem('bgColor', color);
+        }
+
+        // Change entry mode color
+        function changeEntryModeColor(color) {
+            const containers = document.querySelectorAll('.container, .section-container');
+            containers.forEach(container => {
+                container.style.backgroundColor = color;
+            });
+            localStorage.setItem('entryModeColor', color);
+        }
+
+        // Change feature button color
+        function changeFeatureButtonColor(color) {
+            const featureButtons = document.querySelectorAll('.feature-btn');
+            featureButtons.forEach(button => {
+                button.style.backgroundColor = color;
+                button.onmouseover = function() {
+                    this.style.backgroundColor = darkenColor(color, 20);
+                };
+                button.onmouseout = function() {
+                    this.style.backgroundColor = color;
+                };
+            });
+            localStorage.setItem('featureButtonColor', color);
+        }
+
+        // Helper function to darken a color
+        function darkenColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) - amt;
+            const G = (num >> 8 & 0x00FF) - amt;
+            const B = (num & 0x0000FF) - amt;
+            return "#" + (
+                0x1000000 +
+                (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                (B < 255 ? B < 1 ? 0 : B : 255)
+            ).toString(16).slice(1);
+        }
+
+        // Show only the clicked form and hide all others in the section
+        function showOnlyThisForm(formId) {
+            // Get the parent section
+            const parentSection = document.getElementById(formId).closest('.section-container');
+            
+            // Hide all forms in this section
+            const allForms = parentSection.querySelectorAll('.section-content');
+            allForms.forEach(form => {
+                form.classList.add('hidden');
+            });
+            
+            // Show the clicked form
+            document.getElementById(formId).classList.remove('hidden');
+        }
+
+        // Hide all forms in a section
+        function hideAllFormsInSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const allForms = section.querySelectorAll('.section-content');
+            allForms.forEach(form => {
+                form.classList.add('hidden');
+            });
+        }
+
+        // PIN Management Functions
+        function showPinTab(tab) {
+            currentPinAction = tab;
+            
+            // Update tabs
+            document.querySelectorAll('.pin-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update forms
+            document.getElementById('pinCreateForm').classList.add('hidden');
+            document.getElementById('pinChangeForm').classList.add('hidden');
+            document.getElementById('pinDeleteForm').classList.add('hidden');
+            
+            // Update title and button
+            if (tab === 'create') {
+                document.getElementById('pinModalTitle').textContent = 'Create PIN';
+                document.getElementById('pinCreateForm').classList.remove('hidden');
+                document.getElementById('pinActionBtn').textContent = 'Create';
+                document.getElementById('pinActionBtn').onclick = createPin;
+            } else if (tab === 'change') {
+                document.getElementById('pinModalTitle').textContent = 'Change PIN';
+                document.getElementById('pinChangeForm').classList.remove('hidden');
+                document.getElementById('pinActionBtn').textContent = 'Change';
+                document.getElementById('pinActionBtn').onclick = changePin;
+            } else if (tab === 'delete') {
+                document.getElementById('pinModalTitle').textContent = 'Delete PIN';
+                document.getElementById('pinDeleteForm').classList.remove('hidden');
+                document.getElementById('pinActionBtn').textContent = 'Delete';
+                document.getElementById('pinActionBtn').onclick = deletePin;
+            }
+        }
+
+        function openPinSettings() {
+            // Hide/show tabs based on whether PIN exists
+            if (appPin) {
+                document.getElementById('createPinTab').classList.add('hidden');
+                document.getElementById('changePinTab').classList.remove('hidden');
+                document.getElementById('deletePinTab').classList.remove('hidden');
+                currentPinAction = 'change';
+            } else {
+                document.getElementById('createPinTab').classList.remove('hidden');
+                document.getElementById('changePinTab').classList.add('hidden');
+                document.getElementById('deletePinTab').classList.add('hidden');
+                currentPinAction = 'create';
+            }
+            
+            document.getElementById('pinModalTitle').textContent = 'PIN Settings';
+            document.getElementById('pinCreateForm').classList.add('hidden');
+            document.getElementById('pinChangeForm').classList.add('hidden');
+            document.getElementById('pinDeleteForm').classList.add('hidden');
+            
+            // Show the appropriate form
+            if (appPin) {
+                document.getElementById('pinChangeForm').classList.remove('hidden');
+                document.getElementById('pinActionBtn').textContent = 'Change';
+                document.getElementById('pinActionBtn').onclick = changePin;
+            } else {
+                document.getElementById('pinCreateForm').classList.remove('hidden');
+                document.getElementById('pinActionBtn').textContent = 'Create';
+                document.getElementById('pinActionBtn').onclick = createPin;
+            }
+            
+            // Reset tabs
+            document.querySelectorAll('.pin-tab').forEach(t => t.classList.remove('active'));
+            if (appPin) {
+                document.getElementById('changePinTab').classList.add('active');
+            } else {
+                document.getElementById('createPinTab').classList.add('active');
+            }
+            
+            document.getElementById('pinModal').style.display = 'flex';
+        }
+
+        function closePinModal() {
+            document.getElementById('pinModal').style.display = 'none';
+            // Clear all PIN fields
+            document.getElementById('newPin').value = '';
+            document.getElementById('confirmPin').value = '';
+            document.getElementById('oldPin').value = '';
+            document.getElementById('newPinChange').value = '';
+            document.getElementById('confirmPinChange').value = '';
+            document.getElementById('deletePin').value = '';
+        }
+
+        function createPin() {
+            const newPin = document.getElementById('newPin').value;
+            const confirmPin = document.getElementById('confirmPin').value;
+            
+            if (!newPin || !confirmPin) {
+                alert('Please enter and confirm your PIN');
+                return;
+            }
+            
+            if (newPin.length !== 4) {
+                alert('PIN must be 4 digits');
+                return;
+            }
+            
+            if (newPin !== confirmPin) {
+                alert('PINs do not match');
+                return;
+            }
+            
+            appPin = newPin;
+            localStorage.setItem('appPin', appPin);
+            alert('PIN created successfully');
+            closePinModal();
+        }
+
+        function changePin() {
+            const oldPin = document.getElementById('oldPin').value;
+            const newPin = document.getElementById('newPinChange').value;
+            const confirmPin = document.getElementById('confirmPinChange').value;
+            
+            if (!oldPin || !newPin || !confirmPin) {
+                alert('Please fill all fields');
+                return;
+            }
+            
+            if (oldPin !== appPin) {
+                alert('Old PIN is incorrect');
+                return;
+            }
+            
+            if (newPin.length !== 4) {
+                alert('PIN must be 4 digits');
+                return;
+            }
+            
+            if (newPin !== confirmPin) {
+                alert('New PINs do not match');
+                return;
+            }
+            
+            appPin = newPin;
+            localStorage.setItem('appPin', appPin);
+            alert('PIN changed successfully');
+            closePinModal();
+        }
+
+        function deletePin() {
+            const pin = document.getElementById('deletePin').value;
+            
+            if (pin !== appPin) {
+                alert('Incorrect PIN');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete the PIN?')) {
+                appPin = null;
+                localStorage.removeItem('appPin');
+                alert('PIN deleted successfully');
+                closePinModal();
+            }
+        }
+
+        function verifyPin(actionCallback) {
+            if (!appPin) {
+                // No PIN set, proceed with action
+                actionCallback();
+                return;
+            }
+            
+            const enteredPin = prompt('Enter PIN to continue:');
+            if (enteredPin === appPin) {
+                actionCallback();
+            } else if (enteredPin !== null) {
+                alert('Incorrect PIN');
+            }
+        }
+
+        // Company Functions
+        function showCreateCompany() {
+            document.getElementById('createCompanyForm').classList.remove('hidden');
+            document.getElementById('selectCompanyForm').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.add('hidden');
+            renderCompanyTable();
+        }
+
+        function hideCreateCompany() {
+            document.getElementById('createCompanyForm').classList.add('hidden');
+        }
+
+        function showSelectCompany() {
+            document.getElementById('selectCompanyForm').classList.remove('hidden');
+            document.getElementById('createCompanyForm').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.add('hidden');
+            loadCompanyDropdown();
+        }
+
+        function hideSelectCompany() {
+            document.getElementById('selectCompanyForm').classList.add('hidden');
+        }
+
+        function saveCompany() {
+            const companyName = document.getElementById('companyName').value;
+            const companyAddress = document.getElementById('companyAddress').value;
+            const companyMobile = document.getElementById('companyMobile').value;
+            const companyPan = document.getElementById('companyPan').value;
+            const companyGst = document.getElementById('companyGst').value;
+            const startYear = document.getElementById('startYear').value;
+            const endYear = document.getElementById('endYear').value;
+
+            if (!companyName || !companyAddress || !companyMobile || !companyPan || !companyGst || !startYear || !endYear) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            if (currentlyEditingId) {
+                // Update existing company
+                const companyIndex = companies.findIndex(c => c.id === currentlyEditingId);
+                if (companyIndex !== -1) {
+                    companies[companyIndex] = {
+                        ...companies[companyIndex],
+                        name: companyName,
+                        address: companyAddress,
+                        mobile: companyMobile,
+                        pan: companyPan,
+                        gst: companyGst,
+                        startYear: startYear,
+                        endYear: endYear
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderCompanyTable();
+                    clearCompanyForm();
+                    currentlyEditingId = null;
+                    alert('Company updated successfully!');
+                }
+            } else {
+                // Create new company
+                const company = {
+                    id: Date.now(),
+                    name: companyName,
+                    address: companyAddress,
+                    mobile: companyMobile,
+                    pan: companyPan,
+                    gst: companyGst,
+                    startYear: startYear,
+                    endYear: endYear,
+                    // Initialize company-specific data
+                    groups: [],
+                    ledgers: [],
+                    stockGroups: [],
+                    units: [],
+                    stockItems: [],
+                    purchases: [],
+                    sales: []
+                };
+
+                companies.push(company);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderCompanyTable();
+                clearCompanyForm();
+                alert('Company saved successfully!');
+            }
+        }
+
+        function renderCompanyTable() {
+            const tableBody = document.getElementById('companyTableBody');
+            tableBody.innerHTML = '';
+
+            companies.forEach((company, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${company.name}</td>
+                    <td>${company.address}</td>
+                    <td>${company.mobile}</td>
+                    <td>${company.pan}</td>
+                    <td>${company.gst}</td>
+                    <td>${company.startYear}-${company.endYear}</td>
+                    <td>
+                        <button class="btn" onclick="editCompany(${company.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deleteCompany(${company.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function clearCompanyForm() {
+            document.getElementById('companyName').value = '';
+            document.getElementById('companyAddress').value = '';
+            document.getElementById('companyMobile').value = '';
+            document.getElementById('companyPan').value = '';
+            document.getElementById('companyGst').value = '';
+            document.getElementById('startYear').value = '';
+            document.getElementById('endYear').value = '';
+            currentlyEditingId = null;
+        }
+
+        function editCompany(id) {
+            verifyPin(function() {
+                const company = companies.find(c => c.id === id);
+                if (!company) return;
+
+                document.getElementById('companyName').value = company.name;
+                document.getElementById('companyAddress').value = company.address;
+                document.getElementById('companyMobile').value = company.mobile;
+                document.getElementById('companyPan').value = company.pan;
+                document.getElementById('companyGst').value = company.gst;
+                document.getElementById('startYear').value = company.startYear;
+                document.getElementById('endYear').value = company.endYear;
+                
+                currentlyEditingId = id;
+            });
+        }
+
+        function deleteCompany(id) {
+            if (confirm('Are you sure you want to delete this company?')) {
+                companies = companies.filter(c => c.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderCompanyTable();
+            }
+        }
+
+        function searchCompanies() {
+            const searchTerm = document.querySelector('#createCompanyForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#companyTableBody tr');
+
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                const address = row.cells[2].textContent.toLowerCase();
+                const mobile = row.cells[3].textContent.toLowerCase();
+                const pan = row.cells[4].textContent.toLowerCase();
+                const gst = row.cells[5].textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || address.includes(searchTerm) || 
+                    mobile.includes(searchTerm) || pan.includes(searchTerm) || gst.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function loadCompanyDropdown() {
+            const select = document.getElementById('selectCompany');
+            select.innerHTML = '<option value="">-- Select Company --</option>';
+
+            companies.forEach(company => {
+                const option = document.createElement('option');
+                option.value = company.id;
+                option.textContent = `${company.name} (${company.startYear}-${company.endYear})`;
+                select.appendChild(option);
+            });
+        }
+
+        function loadSelectedCompany() {
+            const companyId = parseInt(document.getElementById('selectCompany').value);
+            if (!companyId) {
+                document.getElementById('selectedCompanyInfo').classList.add('hidden');
+                return;
+            }
+
+            currentCompany = companies.find(c => c.id === companyId);
+            if (!currentCompany) return;
+
+            // Extract company name without the year part
+            const companyName = currentCompany.name.split(' (')[0];
+            document.getElementById('displayCompanyName').textContent = companyName;
+            
+            // Load periods (just start and end year in this simple example)
+            const periodSelect = document.getElementById('selectPeriod');
+            periodSelect.innerHTML = '';
+            
+            const startYear = parseInt(currentCompany.startYear);
+            const endYear = parseInt(currentCompany.endYear);
+            
+            for (let year = startYear; year <= endYear; year++) {
+                const option = document.createElement('option');
+                option.value = `${year}-${year+1}`;
+                option.textContent = `${year}-${year+1}`;
+                periodSelect.appendChild(option);
+            }
+
+            document.getElementById('selectedCompanyInfo').classList.remove('hidden');
+        }
+
+        function proceedToDashboard() {
+            currentPeriod = document.getElementById('selectPeriod').value;
+            if (!currentPeriod) {
+                alert('Please select a period');
+                return;
+            }
+
+            // Extract company name without the year part
+            const companyName = currentCompany.name.split(' (')[0];
+            
+            // Show company header
+            document.getElementById('currentCompanyName').textContent = companyName;
+            document.getElementById('dashboardPeriod').textContent = `Period: ${currentPeriod}`;
+            document.getElementById('companyHeader').classList.remove('hidden');
+            
+            // Hide company section and show dashboard
+            document.getElementById('companySection').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.remove('hidden');
+
+            // Load company-specific data
+            groups = currentCompany.groups || [];
+            ledgers = currentCompany.ledgers || [];
+            stockGroups = currentCompany.stockGroups || [];
+            units = currentCompany.units || [];
+            stockItems = currentCompany.stockItems || [];
+            purchases = currentCompany.purchases || [];
+            sales = currentCompany.sales || [];
+        }
+
+        // Dashboard Navigation Functions
+        function showDashboard() {
+            hideAllSections();
+            document.getElementById('mainDashboard').classList.remove('hidden');
+        }
+
+        function openCreateLedger() {
+            hideAllSections();
+            document.getElementById('createLedgerSection').classList.remove('hidden');
+        }
+
+        function openStock() {
+            hideAllSections();
+            document.getElementById('stockSection').classList.remove('hidden');
+        }
+
+        function openPurchase() {
+            hideAllSections();
+            document.getElementById('purchaseSection').classList.remove('hidden');
+        }
+
+        function openDeliveryChallan() {
+            hideAllSections();
+            document.getElementById('deliveryChallanSection').classList.remove('hidden');
+        }
+
+        function openSales() {
+            hideAllSections();
+            document.getElementById('salesSection').classList.remove('hidden');
+        }
+
+        function openPointOfSales() {
+            hideAllSections();
+            document.getElementById('pointOfSalesSection').classList.remove('hidden');
+        }
+
+        function openJournalEntry() {
+            hideAllSections();
+            document.getElementById('journalEntrySection').classList.remove('hidden');
+        }
+
+        function openBankTransaction() {
+            hideAllSections();
+            document.getElementById('bankTransactionSection').classList.remove('hidden');
+        }
+
+        function openClosingStock() {
+            hideAllSections();
+            document.getElementById('closingStockSection').classList.remove('hidden');
+        }
+
+        function openPartyLedger() {
+            hideAllSections();
+            document.getElementById('partyLedgerSection').classList.remove('hidden');
+        }
+
+        function openProfitAndLoss() {
+            hideAllSections();
+            document.getElementById('profitAndLossSection').classList.remove('hidden');
+        }
+
+        function openCompanyGrowth() {
+            hideAllSections();
+            document.getElementById('companyGrowthSection').classList.remove('hidden');
+        }
+
+        function hideAllSections() {
+            document.getElementById('createLedgerSection').classList.add('hidden');
+            document.getElementById('stockSection').classList.add('hidden');
+            document.getElementById('purchaseSection').classList.add('hidden');
+            document.getElementById('salesSection').classList.add('hidden');
+            document.getElementById('pointOfSalesSection').classList.add('hidden');
+            document.getElementById('deliveryChallanSection').classList.add('hidden');
+            document.getElementById('journalEntrySection').classList.add('hidden');
+            document.getElementById('bankTransactionSection').classList.add('hidden');
+            document.getElementById('closingStockSection').classList.add('hidden');
+            document.getElementById('partyLedgerSection').classList.add('hidden');
+            document.getElementById('profitAndLossSection').classList.add('hidden');
+            document.getElementById('companyGrowthSection').classList.add('hidden');
+        }
+
+        function goBackToCompanySection() {
+            // Save company-specific data before leaving
+            if (currentCompany) {
+                currentCompany.groups = groups;
+                currentCompany.ledgers = ledgers;
+                currentCompany.stockGroups = stockGroups;
+                currentCompany.units = units;
+                currentCompany.stockItems = stockItems;
+                currentCompany.purchases = purchases;
+                currentCompany.sales = sales;
+                
+                // Update the company in the companies array
+                const index = companies.findIndex(c => c.id === currentCompany.id);
+                if (index !== -1) {
+                    companies[index] = currentCompany;
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                }
+            }
+
+            document.getElementById('mainDashboard').classList.add('hidden');
+            document.getElementById('companyHeader').classList.add('hidden');
+            document.getElementById('companySection').classList.remove('hidden');
+            currentCompany = null;
+            currentPeriod = null;
+        }
+
+        // Ledger Functions
+        function checkBankGroup() {
+            const groupId = parseInt(document.getElementById('ledgerGroup').value);
+            if (!groupId) return;
+
+            const group = groups.find(g => g.id === groupId);
+            if (!group) return;
+
+            // Check if group name contains "bank" (case insensitive)
+            const isBankGroup = group.name.toLowerCase().includes('bank');
+            
+            if (isBankGroup) {
+                document.getElementById('ledgerAccountLabel').textContent = 'Account No:';
+                document.getElementById('ledgerGstLabel').textContent = 'IFSC Code:';
+                document.getElementById('ledgerTableGstHeader').textContent = 'IFSC Code';
+            } else {
+                document.getElementById('ledgerAccountLabel').textContent = 'PAN/IT No:';
+                document.getElementById('ledgerGstLabel').textContent = 'GSTIN No:';
+                document.getElementById('ledgerTableGstHeader').textContent = 'GSTIN No';
+            }
+        }
+
+        function showGroupForm() {
+            hideAllLedgerForms();
+            document.getElementById('groupForm').classList.remove('hidden');
+            renderGroupTable();
+        }
+
+        function hideGroupForm() {
+            document.getElementById('groupForm').classList.add('hidden');
+        }
+
+        function clearGroupForm() {
+            document.getElementById('groupName').value = '';
+            currentlyEditingId = null;
+        }
+
+        function saveGroup() {
+            const groupName = document.getElementById('groupName').value;
+            if (!groupName) {
+                alert('Please enter group name');
+                return;
+            }
+
+            if (currentlyEditingId) {
+                // Update existing group
+                const groupIndex = groups.findIndex(g => g.id === currentlyEditingId);
+                if (groupIndex !== -1) {
+                    groups[groupIndex] = {
+                        ...groups[groupIndex],
+                        name: groupName
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderGroupTable();
+                    document.getElementById('groupName').value = '';
+                    currentlyEditingId = null;
+                    alert('Group updated successfully!');
+                }
+            } else {
+                // Create new group
+                const group = {
+                    id: Date.now(),
+                    name: groupName
+                };
+
+                groups.push(group);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderGroupTable();
+                document.getElementById('groupName').value = '';
+                alert('Group saved successfully!');
+            }
+        }
+
+        function renderGroupTable() {
+            const tableBody = document.getElementById('groupTableBody');
+            tableBody.innerHTML = '';
+
+            groups.forEach((group, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${group.name}</td>
+                    <td>
+                        <button class="btn" onclick="editGroup(${group.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deleteGroup(${group.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function editGroup(id) {
+            verifyPin(function() {
+                const group = groups.find(g => g.id === id);
+                if (!group) return;
+
+                document.getElementById('groupName').value = group.name;
+                currentlyEditingId = id;
+            });
+        }
+
+        function deleteGroup(id) {
+            if (confirm('Are you sure you want to delete this group?')) {
+                groups = groups.filter(g => g.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderGroupTable();
+            }
+        }
+
+        function searchGroups() {
+            const searchTerm = document.querySelector('#groupForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#groupTableBody tr');
+
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function showLedgerForm() {
+            hideAllLedgerForms();
+            document.getElementById('ledgerForm').classList.remove('hidden');
+            
+            // Load groups into dropdown
+            const groupSelect = document.getElementById('ledgerGroup');
+            groupSelect.innerHTML = '<option value="">-- Select Group --</option>';
+            groups.forEach(group => {
+                const option = document.createElement('option');
+                option.value = group.id;
+                option.textContent = group.name;
+                groupSelect.appendChild(option);
+            });
+
+            renderLedgerTable();
+        }
+
+        function hideLedgerForm() {
+            document.getElementById('ledgerForm').classList.add('hidden');
+        }
+
+        function clearLedgerForm() {
+            document.getElementById('ledgerName').value = '';
+            document.getElementById('ledgerGroup').value = '';
+            document.getElementById('ledgerAddress').value = '';
+            document.getElementById('ledgerState').value = '';
+            document.getElementById('ledgerPincode').value = '';
+            document.getElementById('ledgerMobile').value = '';
+            document.getElementById('ledgerPan').value = '';
+            document.getElementById('ledgerGst').value = '';
+            document.getElementById('openingBalance').value = '0';
+            currentlyEditingId = null;
+        }
+
+        function saveLedger() {
+            const ledgerName = document.getElementById('ledgerName').value;
+            const ledgerGroupId = parseInt(document.getElementById('ledgerGroup').value);
+            const ledgerAddress = document.getElementById('ledgerAddress').value;
+            const ledgerState = document.getElementById('ledgerState').value;
+            const ledgerPincode = document.getElementById('ledgerPincode').value;
+            const ledgerMobile = document.getElementById('ledgerMobile').value;
+            const ledgerPan = document.getElementById('ledgerPan').value;
+            const ledgerGst = document.getElementById('ledgerGst').value;
+            const openingBalance = parseFloat(document.getElementById('openingBalance').value) || 0;
+
+            if (!ledgerName || !ledgerGroupId) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            const group = groups.find(g => g.id === ledgerGroupId);
+            if (!group) {
+                alert('Invalid group selected');
+                return;
+            }
+
+            if (currentlyEditingId) {
+                // Update existing ledger
+                const ledgerIndex = ledgers.findIndex(l => l.id === currentlyEditingId);
+                if (ledgerIndex !== -1) {
+                    ledgers[ledgerIndex] = {
+                        ...ledgers[ledgerIndex],
+                        name: ledgerName,
+                        groupId: ledgerGroupId,
+                        groupName: group.name,
+                        address: ledgerAddress,
+                        state: ledgerState,
+                        pincode: ledgerPincode,
+                        mobile: ledgerMobile,
+                        pan: ledgerPan,
+                        gst: ledgerGst,
+                        openingBalance: openingBalance
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderLedgerTable();
+                    clearLedgerForm();
+                    currentlyEditingId = null;
+                    alert('Ledger updated successfully!');
+                }
+            } else {
+                // Create new ledger
+                const ledger = {
+                    id: Date.now(),
+                    name: ledgerName,
+                    groupId: ledgerGroupId,
+                    groupName: group.name,
+                    address: ledgerAddress,
+                    state: ledgerState,
+                    pincode: ledgerPincode,
+                    mobile: ledgerMobile,
+                    pan: ledgerPan,
+                    gst: ledgerGst,
+                    openingBalance: openingBalance
+                };
+
+                ledgers.push(ledger);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderLedgerTable();
+                clearLedgerForm();
+                alert('Ledger saved successfully!');
+            }
+        }
+
+        function renderLedgerTable() {
+            const tableBody = document.getElementById('ledgerTableBody');
+            tableBody.innerHTML = '';
+
+            ledgers.forEach((ledger, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${ledger.name}</td>
+                    <td>${ledger.groupName}</td>
+                    <td>${ledger.address}</td>
+                    <td>${ledger.mobile}</td>
+                    <td>${ledger.gst}</td>
+                    <td>${ledger.openingBalance}</td>
+                    <td>
+                        <button class="btn" onclick="editLedger(${ledger.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deleteLedger(${ledger.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function editLedger(id) {
+            verifyPin(function() {
+                const ledger = ledgers.find(l => l.id === id);
+                if (!ledger) return;
+
+                document.getElementById('ledgerName').value = ledger.name;
+                document.getElementById('ledgerGroup').value = ledger.groupId;
+                document.getElementById('ledgerAddress').value = ledger.address;
+                document.getElementById('ledgerState').value = ledger.state;
+                document.getElementById('ledgerPincode').value = ledger.pincode;
+                document.getElementById('ledgerMobile').value = ledger.mobile;
+                document.getElementById('ledgerPan').value = ledger.pan;
+                document.getElementById('ledgerGst').value = ledger.gst;
+                document.getElementById('openingBalance').value = ledger.openingBalance;
+
+                // Check if this is a bank group
+                checkBankGroup();
+                
+                currentlyEditingId = id;
+            });
+        }
+
+        function deleteLedger(id) {
+            if (confirm('Are you sure you want to delete this ledger?')) {
+                ledgers = ledgers.filter(l => l.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderLedgerTable();
+            }
+        }
+
+        function searchLedgers() {
+            const searchTerm = document.querySelector('#ledgerForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#ledgerTableBody tr');
+
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                const group = row.cells[2].textContent.toLowerCase();
+                const address = row.cells[3].textContent.toLowerCase();
+                const mobile = row.cells[4].textContent.toLowerCase();
+                const gst = row.cells[5].textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || group.includes(searchTerm) || 
+                    address.includes(searchTerm) || mobile.includes(searchTerm) || gst.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function showStockGroupForm() {
+            hideAllLedgerForms();
+            document.getElementById('stockGroupForm').classList.remove('hidden');
+            renderStockGroupTable();
+        }
+
+        function hideStockGroupForm() {
+            document.getElementById('stockGroupForm').classList.add('hidden');
+        }
+
+        function clearStockGroupForm() {
+            document.getElementById('stockGroupName').value = '';
+            currentlyEditingId = null;
+        }
+
+        function saveStockGroup() {
+            const stockGroupName = document.getElementById('stockGroupName').value;
+            if (!stockGroupName) {
+                alert('Please enter stock group name');
+                return;
+            }
+
+            if (currentlyEditingId) {
+                // Update existing stock group
+                const stockGroupIndex = stockGroups.findIndex(sg => sg.id === currentlyEditingId);
+                if (stockGroupIndex !== -1) {
+                    stockGroups[stockGroupIndex] = {
+                        ...stockGroups[stockGroupIndex],
+                        name: stockGroupName
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderStockGroupTable();
+                    document.getElementById('stockGroupName').value = '';
+                    currentlyEditingId = null;
+                    alert('Stock Group updated successfully!');
+                }
+            } else {
+                // Create new stock group
+                const stockGroup = {
+                    id: Date.now(),
+                    name: stockGroupName
+                };
+
+                stockGroups.push(stockGroup);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderStockGroupTable();
+                document.getElementById('stockGroupName').value = '';
+                alert('Stock Group saved successfully!');
+            }
+        }
+
+        function renderStockGroupTable() {
+            const tableBody = document.getElementById('stockGroupTableBody');
+            tableBody.innerHTML = '';
+
+            stockGroups.forEach((stockGroup, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${stockGroup.name}</td>
+                    <td>
+                        <button class="btn" onclick="editStockGroup(${stockGroup.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deleteStockGroup(${stockGroup.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function editStockGroup(id) {
+            verifyPin(function() {
+                const stockGroup = stockGroups.find(sg => sg.id === id);
+                if (!stockGroup) return;
+
+                document.getElementById('stockGroupName').value = stockGroup.name;
+                currentlyEditingId = id;
+            });
+        }
+
+        function deleteStockGroup(id) {
+            if (confirm('Are you sure you want to delete this stock group?')) {
+                stockGroups = stockGroups.filter(sg => sg.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderStockGroupTable();
+            }
+        }
+
+        function searchStockGroups() {
+            const searchTerm = document.querySelector('#stockGroupForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#stockGroupTableBody tr');
+
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function showCategoryForm() {
+            hideAllLedgerForms();
+            document.getElementById('categoryForm').classList.remove('hidden');
+            renderCategoryTable();
+        }
+
+        function hideCategoryForm() {
+            document.getElementById('categoryForm').classList.add('hidden');
+        }
+
+        function clearUnitForm() {
+            document.getElementById('unitName').value = '';
+            currentlyEditingId = null;
+        }
+
+        function saveUnit() {
+            const unitName = document.getElementById('unitName').value;
+            if (!unitName) {
+                alert('Please enter unit name');
+                return;
+            }
+
+            if (currentlyEditingId) {
+                // Update existing unit
+                const unitIndex = units.findIndex(u => u.id === currentlyEditingId);
+                if (unitIndex !== -1) {
+                    units[unitIndex] = {
+                        ...units[unitIndex],
+                        name: unitName
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderCategoryTable();
+                    document.getElementById('unitName').value = '';
+                    currentlyEditingId = null;
+                    alert('Unit updated successfully!');
+                }
+            } else {
+                // Create new unit
+                const unit = {
+                    id: Date.now(),
+                    name: unitName
+                };
+
+                units.push(unit);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderCategoryTable();
+                document.getElementById('unitName').value = '';
+                alert('Unit saved successfully!');
+            }
+        }
+
+        function renderCategoryTable() {
+            const tableBody = document.getElementById('categoryTableBody');
+            tableBody.innerHTML = '';
+
+            units.forEach((unit, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${unit.name}</td>
+                    <td>
+                        <button class="btn" onclick="editUnit(${unit.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deleteUnit(${unit.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function editUnit(id) {
+            verifyPin(function() {
+                const unit = units.find(u => u.id === id);
+                if (!unit) return;
+
+                document.getElementById('unitName').value = unit.name;
+                currentlyEditingId = id;
+            });
+        }
+
+        function deleteUnit(id) {
+            if (confirm('Are you sure you want to delete this unit?')) {
+                units = units.filter(u => u.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderCategoryTable();
+            }
+        }
+
+        function searchUnits() {
+            const searchTerm = document.querySelector('#categoryForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#categoryTableBody tr');
+
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                if (name.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function hideAllLedgerForms() {
+            document.getElementById('groupForm').classList.add('hidden');
+            document.getElementById('ledgerForm').classList.add('hidden');
+            document.getElementById('stockGroupForm').classList.add('hidden');
+            document.getElementById('categoryForm').classList.add('hidden');
+        }
+
+        // Stock Functions
+        function showStockForm() {
+            document.getElementById('stockForm').classList.remove('hidden');
+            
+            // Load units into dropdown
+            const unitSelect = document.getElementById('itemUnit');
+            unitSelect.innerHTML = '<option value="">-- Select Unit --</option>';
+            units.forEach(unit => {
+                const option = document.createElement('option');
+                option.value = unit.id;
+                option.textContent = unit.name;
+                unitSelect.appendChild(option);
+            });
+
+            renderStockTable();
+        }
+
+        function hideStockForm() {
+            document.getElementById('stockForm').classList.add('hidden');
+        }
+
+        function clearStockForm() {
+            document.getElementById('itemName').value = '';
+            document.getElementById('hsnCode').value = '';
+            document.getElementById('itemQty').value = '';
+            document.getElementById('itemRate').value = '';
+            document.getElementById('itemUnit').value = '';
+            document.getElementById('totalAmount').value = '';
+            currentlyEditingId = null;
+        }
+
+        function calculateStockTotal() {
+            const qty = parseFloat(document.getElementById('itemQty').value) || 0;
+            const rate = parseFloat(document.getElementById('itemRate').value) || 0;
+            document.getElementById('totalAmount').value = (qty * rate).toFixed(2);
+        }
+
+        function saveStockItem() {
+            const itemName = document.getElementById('itemName').value;
+            const hsnCode = document.getElementById('hsnCode').value;
+            const qty = parseFloat(document.getElementById('itemQty').value) || 0;
+            const rate = parseFloat(document.getElementById('itemRate').value) || 0;
+            const unitId = parseInt(document.getElementById('itemUnit').value);
+            const totalAmount = parseFloat(document.getElementById('totalAmount').value) || 0;
+
+            if (!itemName || !unitId) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            const unit = units.find(u => u.id === unitId);
+            if (!unit) {
+                alert('Invalid unit selected');
+                return;
+            }
+
+            if (currentlyEditingId) {
+                // Update existing stock item
+                const itemIndex = stockItems.findIndex(i => i.id === currentlyEditingId);
+                if (itemIndex !== -1) {
+                    stockItems[itemIndex] = {
+                        ...stockItems[itemIndex],
+                        name: itemName,
+                        hsnCode: hsnCode,
+                        quantity: qty,
+                        rate: rate,
+                        unitId: unitId,
+                        unitName: unit.name,
+                        totalAmount: totalAmount
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderStockTable();
+                    clearStockForm();
+                    currentlyEditingId = null;
+                    alert('Stock item updated successfully!');
+                }
+            } else {
+                // Create new stock item
+                const stockItem = {
+                    id: Date.now(),
+                    name: itemName,
+                    hsnCode: hsnCode,
+                    quantity: qty,
+                    rate: rate,
+                    unitId: unitId,
+                    unitName: unit.name,
+                    totalAmount: totalAmount
+                };
+
+                stockItems.push(stockItem);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderStockTable();
+                clearStockForm();
+                alert('Stock item saved successfully!');
+            }
+        }
+
+        function renderStockTable() {
+            const tableBody = document.getElementById('stockTableBody');
+            tableBody.innerHTML = '';
+
+            stockItems.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${item.name}</td>
+                    <td>${item.hsnCode}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.rate}</td>
+                    <td>${item.unitName}</td>
+                    <td>${item.totalAmount}</td>
+                    <td>
+                        <button class="btn" onclick="editStockItem(${item.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deleteStockItem(${item.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function editStockItem(id) {
+            verifyPin(function() {
+                const item = stockItems.find(i => i.id === id);
+                if (!item) return;
+
+                document.getElementById('itemName').value = item.name;
+                document.getElementById('hsnCode').value = item.hsnCode;
+                document.getElementById('itemQty').value = item.quantity;
+                document.getElementById('itemRate').value = item.rate;
+                document.getElementById('itemUnit').value = item.unitId;
+                document.getElementById('totalAmount').value = item.totalAmount;
+                
+                currentlyEditingId = id;
+            });
+        }
+
+        function deleteStockItem(id) {
+            if (confirm('Are you sure you want to delete this stock item?')) {
+                stockItems = stockItems.filter(i => i.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderStockTable();
+            }
+        }
+
+        function searchStockItems() {
+            const searchTerm = document.querySelector('#stockForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#stockTableBody tr');
+
+            rows.forEach(row => {
+                const name = row.cells[1].textContent.toLowerCase();
+                const hsn = row.cells[2].textContent.toLowerCase();
+                const unit = row.cells[5].textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || hsn.includes(searchTerm) || unit.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Purchase Functions
+        function showPurchaseForm() {
+            document.getElementById('purchaseForm').classList.remove('hidden');
+            
+            // Load parties into dropdown (excluding bank accounts)
+            const partySelect = document.getElementById('purchaseParty');
+            partySelect.innerHTML = '<option value="">-- Select Party --</option>';
+            ledgers.forEach(ledger => {
+                // Skip if group name contains "bank" (case insensitive)
+                if (!ledger.groupName.toLowerCase().includes('bank')) {
+                    const option = document.createElement('option');
+                    option.value = ledger.id;
+                    option.textContent = ledger.name;
+                    partySelect.appendChild(option);
+                }
+            });
+            
+            // Load items into dropdown
+            const itemSelect = document.getElementById('purchaseItem');
+            itemSelect.innerHTML = '<option value="">-- Select Item --</option>';
+            stockItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.name;
+                itemSelect.appendChild(option);
+            });
+
+            // Reset current items
+            currentPurchaseItems = [];
+            renderPurchaseItems();
+            calculatePurchaseTotal();
+        }
+
+        function hidePurchaseForm() {
+            document.getElementById('purchaseForm').classList.add('hidden');
+        }
+
+        function clearPurchaseForm() {
+            document.getElementById('purchaseDate').value = '';
+            document.getElementById('purchaseParty').value = '';
+            document.getElementById('purchaseInvoiceNo').value = '';
+            currentPurchaseItems = [];
+            renderPurchaseItems();
+            calculatePurchaseTotal();
+            currentlyEditingId = null;
+        }
+
+        function addPurchaseItem() {
+            const itemId = parseInt(document.getElementById('purchaseItem').value);
+            const qty = parseFloat(document.getElementById('purchaseQty').value) || 0;
+            const rate = parseFloat(document.getElementById('purchaseRate').value) || 0;
+            const gstType = document.getElementById('purchaseGstType').value;
+            let gstRate = document.getElementById('purchaseGst').value;
+
+            if (!itemId || qty <= 0 || rate <= 0) {
+                alert('Please fill all required fields with valid values');
+                return;
+            }
+
+            const item = stockItems.find(i => i.id === itemId);
+            if (!item) {
+                alert('Invalid item selected');
+                return;
+            }
+
+            const amount = qty * rate;
+            let taxAmount = 0;
+            let total = amount;
+
+            // Handle GST rate (including combined rates like 2.5+2.5)
+            let gstRateValue = 0;
+            if (gstRate.includes('+')) {
+                // For combined rates like 2.5+2.5, split and sum them
+                const rates = gstRate.split('+').map(r => parseFloat(r));
+                gstRateValue = rates.reduce((sum, r) => sum + r, 0);
+            } else {
+                gstRateValue = parseFloat(gstRate) || 0;
+            }
+
+            if (gstRateValue > 0) {
+                if (gstType === 'cgst_sgst') {
+                    // For CGST+SGST, split the rate into two
+                    taxAmount = amount * (gstRateValue / 100);
+                } else if (gstType === 'igst') {
+                    // For IGST, apply full rate
+                    taxAmount = amount * (gstRateValue / 100);
+                }
+                total = amount + taxAmount;
+            }
+
+            const purchaseItem = {
+                id: Date.now(),
+                itemId: itemId,
+                itemName: item.name,
+                hsnCode: item.hsnCode,
+                quantity: qty,
+                rate: rate,
+                amount: amount,
+                gstType: gstType,
+                gstRate: gstRate,
+                taxAmount: taxAmount,
+                total: total
+            };
+
+            currentPurchaseItems.push(purchaseItem);
+            renderPurchaseItems();
+            calculatePurchaseTotal();
+
+            // Clear item fields
+            document.getElementById('purchaseItem').value = '';
+            document.getElementById('purchaseQty').value = '1';
+            document.getElementById('purchaseRate').value = '';
+            document.getElementById('purchaseGstType').value = 'cgst_sgst';
+            document.getElementById('purchaseGst').value = '0';
+        }
+
+        function renderPurchaseItems() {
+            const tableBody = document.getElementById('purchaseItemsTableBody');
+            tableBody.innerHTML = '';
+
+            currentPurchaseItems.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.itemName}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.rate.toFixed(2)}</td>
+                    <td>${item.amount.toFixed(2)}</td>
+                    <td>${item.gstType === 'cgst_sgst' ? 'CGST+SGST' : 'IGST'}</td>
+                    <td>${item.gstRate}%</td>
+                    <td>${item.taxAmount.toFixed(2)}</td>
+                    <td>${item.total.toFixed(2)}</td>
+                    <td><button class="btn" onclick="removePurchaseItem(${index})">Remove</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function removePurchaseItem(index) {
+            currentPurchaseItems.splice(index, 1);
+            renderPurchaseItems();
+            calculatePurchaseTotal();
+        }
+
+        function calculatePurchaseTotal() {
+            let subtotal = 0;
+            let taxAmount = 0;
+            
+            currentPurchaseItems.forEach(item => {
+                subtotal += item.amount;
+                taxAmount += item.taxAmount;
+            });
+
+            const discount = parseFloat(document.getElementById('purchaseDiscount').value) || 0;
+            const freight = parseFloat(document.getElementById('purchaseFreight').value) || 0;
+            
+            let grandTotal = subtotal - discount + freight + taxAmount;
+            const roundOff = Math.round(grandTotal) - grandTotal;
+            grandTotal = Math.round(grandTotal);
+
+            document.getElementById('purchaseSubtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('purchaseTaxAmount').textContent = taxAmount.toFixed(2);
+            document.getElementById('purchaseRoundOff').textContent = roundOff.toFixed(2);
+            document.getElementById('purchaseGrandTotal').textContent = grandTotal.toFixed(2);
+        }
+
+        function savePurchase() {
+            const purchaseDate = document.getElementById('purchaseDate').value;
+            const partyId = parseInt(document.getElementById('purchaseParty').value);
+            const invoiceNo = document.getElementById('purchaseInvoiceNo').value;
+            
+            if (!purchaseDate || !partyId || !invoiceNo || currentPurchaseItems.length === 0) {
+                alert('Please fill all required fields and add at least one item');
+                return;
+            }
+
+            const party = ledgers.find(l => l.id === partyId);
+            if (!party) {
+                alert('Invalid party selected');
+                return;
+            }
+
+            const subtotal = parseFloat(document.getElementById('purchaseSubtotal').textContent) || 0;
+            const discount = parseFloat(document.getElementById('purchaseDiscount').value) || 0;
+            const freight = parseFloat(document.getElementById('purchaseFreight').value) || 0;
+            const taxAmount = parseFloat(document.getElementById('purchaseTaxAmount').textContent) || 0;
+            const roundOff = parseFloat(document.getElementById('purchaseRoundOff').textContent) || 0;
+            const grandTotal = parseFloat(document.getElementById('purchaseGrandTotal').textContent) || 0;
+
+            if (currentlyEditingId) {
+                // Update existing purchase
+                const purchaseIndex = purchases.findIndex(p => p.id === currentlyEditingId);
+                if (purchaseIndex !== -1) {
+                    purchases[purchaseIndex] = {
+                        ...purchases[purchaseIndex],
+                        date: purchaseDate,
+                        partyId: partyId,
+                        partyName: party.name,
+                        invoiceNo: invoiceNo,
+                        items: [...currentPurchaseItems],
+                        subtotal: subtotal,
+                        discount: discount,
+                        freight: freight,
+                        taxAmount: taxAmount,
+                        roundOff: roundOff,
+                        grandTotal: grandTotal
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderPurchaseTable();
+                    clearPurchaseForm();
+                    currentlyEditingId = null;
+                    alert('Purchase updated successfully!');
+                }
+            } else {
+                // Create new purchase
+                const purchase = {
+                    id: Date.now(),
+                    date: purchaseDate,
+                    partyId: partyId,
+                    partyName: party.name,
+                    invoiceNo: invoiceNo,
+                    items: [...currentPurchaseItems],
+                    subtotal: subtotal,
+                    discount: discount,
+                    freight: freight,
+                    taxAmount: taxAmount,
+                    roundOff: roundOff,
+                    grandTotal: grandTotal
+                };
+
+                purchases.push(purchase);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderPurchaseTable();
+                clearPurchaseForm();
+                alert('Purchase saved successfully!');
+            }
+        }
+
+        function renderPurchaseTable() {
+            const tableBody = document.getElementById('purchaseTableBody');
+            tableBody.innerHTML = '';
+
+            purchases.forEach((purchase, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${purchase.date}</td>
+                    <td>${purchase.invoiceNo}</td>
+                    <td>${purchase.partyName}</td>
+                    <td>${purchase.subtotal.toFixed(2)}</td>
+                    <td>${purchase.taxAmount.toFixed(2)}</td>
+                    <td>${purchase.grandTotal.toFixed(2)}</td>
+                    <td>
+                        <button class="btn" onclick="viewPurchase(${purchase.id})">View</button>
+                        <button class="btn" onclick="editPurchase(${purchase.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deletePurchase(${purchase.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function viewPurchase(id) {
+            const purchase = purchases.find(p => p.id === id);
+            if (!purchase) return;
+
+            // Show purchase details in a modal with item details
+            let itemsHTML = '<div class="item-details"><table><thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th><th>GST Type</th><th>GST Rate</th><th>Tax Amt</th><th>Total</th></tr></thead><tbody>';
+            
+            purchase.items.forEach(item => {
+                itemsHTML += `
+                    <tr>
+                        <td>${item.itemName}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.rate.toFixed(2)}</td>
+                        <td>${item.amount.toFixed(2)}</td>
+                        <td>${item.gstType === 'cgst_sgst' ? 'CGST+SGST' : 'IGST'}</td>
+                        <td>${item.gstRate}%</td>
+                        <td>${item.taxAmount.toFixed(2)}</td>
+                        <td>${item.total.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+            
+            itemsHTML += '</tbody></table></div>';
+            
+            alert(`Purchase Details\n
+Date: ${purchase.date}\n
+Invoice No: ${purchase.invoiceNo}\n
+Party: ${purchase.partyName}\n
+Subtotal: ${purchase.subtotal.toFixed(2)}\n
+Tax: ${purchase.taxAmount.toFixed(2)}\n
+Total: ${purchase.grandTotal.toFixed(2)}`);
+            
+            // Create a modal to show item details
+            const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '1000';
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.backgroundColor = 'white';
+            modalContent.style.padding = '20px';
+            modalContent.style.borderRadius = '5px';
+            modalContent.style.maxWidth = '80%';
+            modalContent.style.maxHeight = '80%';
+            modalContent.style.overflow = 'auto';
+            
+            modalContent.innerHTML = `
+                <h3>Purchase Details</h3>
+                <p><strong>Date:</strong> ${purchase.date}</p>
+                <p><strong>Invoice No:</strong> ${purchase.invoiceNo}</p>
+                <p><strong>Party:</strong> ${purchase.partyName}</p>
+                <p><strong>Subtotal:</strong> ${purchase.subtotal.toFixed(2)}</p>
+                <p><strong>Tax:</strong> ${purchase.taxAmount.toFixed(2)}</p>
+                <p><strong>Total:</strong> ${purchase.grandTotal.toFixed(2)}</p>
+                <h4>Items</h4>
+                ${itemsHTML}
+                <button class="btn" onclick="this.parentNode.parentNode.remove()" style="margin-top: 10px;">Close</button>
+            `;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+
+        function editPurchase(id) {
+            verifyPin(function() {
+                const purchase = purchases.find(p => p.id === id);
+                if (!purchase) return;
+
+                // Set form values
+                document.getElementById('purchaseDate').value = purchase.date;
+                document.getElementById('purchaseParty').value = purchase.partyId;
+                document.getElementById('purchaseInvoiceNo').value = purchase.invoiceNo;
+                
+                // Set items
+                currentPurchaseItems = [...purchase.items];
+                renderPurchaseItems();
+                
+                // Set summary values
+                document.getElementById('purchaseDiscount').value = purchase.discount;
+                document.getElementById('purchaseFreight').value = purchase.freight;
+                
+                // Calculate totals
+                calculatePurchaseTotal();
+                
+                // Set editing mode
+                currentlyEditingId = id;
+            });
+        }
+
+        function deletePurchase(id) {
+            if (confirm('Are you sure you want to delete this purchase?')) {
+                purchases = purchases.filter(p => p.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderPurchaseTable();
+            }
+        }
+
+        function searchPurchases() {
+            const searchTerm = document.querySelector('#purchaseForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#purchaseTableBody tr');
+
+            rows.forEach(row => {
+                const invoiceNo = row.cells[1].textContent.toLowerCase();
+                const party = row.cells[2].textContent.toLowerCase();
+                const total = row.cells[5].textContent.toLowerCase();
+
+                if (invoiceNo.includes(searchTerm) || party.includes(searchTerm) || total.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Sales Functions
+        function showSalesForm() {
+            document.getElementById('salesForm').classList.remove('hidden');
+            
+            // Load parties into dropdown (excluding bank accounts)
+            const partySelect = document.getElementById('salesParty');
+            partySelect.innerHTML = '<option value="">-- Select Party --</option>';
+            ledgers.forEach(ledger => {
+                // Skip if group name contains "bank" (case insensitive)
+                if (!ledger.groupName.toLowerCase().includes('bank')) {
+                    const option = document.createElement('option');
+                    option.value = ledger.id;
+                    option.textContent = ledger.name;
+                    partySelect.appendChild(option);
+                }
+            });
+            
+            // Load items into dropdown
+            const itemSelect = document.getElementById('salesItem');
+            itemSelect.innerHTML = '<option value="">-- Select Item --</option>';
+            stockItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = item.name;
+                itemSelect.appendChild(option);
+            });
+
+            // Reset current items
+            currentSalesItems = [];
+            renderSalesItems();
+            calculateSalesTotal();
+        }
+
+        function hideSalesForm() {
+            document.getElementById('salesForm').classList.add('hidden');
+        }
+
+        function clearSalesForm() {
+            document.getElementById('salesDate').value = '';
+            document.getElementById('salesParty').value = '';
+            document.getElementById('salesInvoiceNo').value = '';
+            currentSalesItems = [];
+            renderSalesItems();
+            calculateSalesTotal();
+            currentlyEditingId = null;
+        }
+
+        function addSalesItem() {
+            const itemId = parseInt(document.getElementById('salesItem').value);
+            const qty = parseFloat(document.getElementById('salesQty').value) || 0;
+            const rate = parseFloat(document.getElementById('salesRate').value) || 0;
+            const gstType = document.getElementById('salesGstType').value;
+            let gstRate = document.getElementById('salesGst').value;
+
+            if (!itemId || qty <= 0 || rate <= 0) {
+                alert('Please fill all required fields with valid values');
+                return;
+            }
+
+            const item = stockItems.find(i => i.id === itemId);
+            if (!item) {
+                alert('Invalid item selected');
+                return;
+            }
+
+            const amount = qty * rate;
+            let taxAmount = 0;
+            let total = amount;
+
+            // Handle GST rate (including combined rates like 2.5+2.5)
+            let gstRateValue = 0;
+            if (gstRate.includes('+')) {
+                // For combined rates like 2.5+2.5, split and sum them
+                const rates = gstRate.split('+').map(r => parseFloat(r));
+                gstRateValue = rates.reduce((sum, r) => sum + r, 0);
+            } else {
+                gstRateValue = parseFloat(gstRate) || 0;
+            }
+
+            if (gstRateValue > 0) {
+                if (gstType === 'cgst_sgst') {
+                    // For CGST+SGST, split the rate into two
+                    taxAmount = amount * (gstRateValue / 100);
+                } else if (gstType === 'igst') {
+                    // For IGST, apply full rate
+                    taxAmount = amount * (gstRateValue / 100);
+                }
+                total = amount + taxAmount;
+            }
+
+            const salesItem = {
+                id: Date.now(),
+                itemId: itemId,
+                itemName: item.name,
+                hsnCode: item.hsnCode,
+                quantity: qty,
+                rate: rate,
+                amount: amount,
+                gstType: gstType,
+                gstRate: gstRate,
+                taxAmount: taxAmount,
+                total: total
+            };
+
+            currentSalesItems.push(salesItem);
+            renderSalesItems();
+            calculateSalesTotal();
+
+            // Clear item fields
+            document.getElementById('salesItem').value = '';
+            document.getElementById('salesQty').value = '1';
+            document.getElementById('salesRate').value = '';
+            document.getElementById('salesGstType').value = 'cgst_sgst';
+            document.getElementById('salesGst').value = '0';
+        }
+
+        function renderSalesItems() {
+            const tableBody = document.getElementById('salesItemsTableBody');
+            tableBody.innerHTML = '';
+
+            currentSalesItems.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.itemName}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.rate.toFixed(2)}</td>
+                    <td>${item.amount.toFixed(2)}</td>
+                    <td>${item.gstType === 'cgst_sgst' ? 'CGST+SGST' : 'IGST'}</td>
+                    <td>${item.gstRate}%</td>
+                    <td>${item.taxAmount.toFixed(2)}</td>
+                    <td>${item.total.toFixed(2)}</td>
+                    <td><button class="btn" onclick="removeSalesItem(${index})">Remove</button></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function removeSalesItem(index) {
+            currentSalesItems.splice(index, 1);
+            renderSalesItems();
+            calculateSalesTotal();
+        }
+
+        function calculateSalesTotal() {
+            let subtotal = 0;
+            let taxAmount = 0;
+            
+            currentSalesItems.forEach(item => {
+                subtotal += item.amount;
+                taxAmount += item.taxAmount;
+            });
+
+            const discount = parseFloat(document.getElementById('salesDiscount').value) || 0;
+            const freight = parseFloat(document.getElementById('salesFreight').value) || 0;
+            
+            let grandTotal = subtotal - discount + freight + taxAmount;
+            const roundOff = Math.round(grandTotal) - grandTotal;
+            grandTotal = Math.round(grandTotal);
+
+            document.getElementById('salesSubtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('salesTaxAmount').textContent = taxAmount.toFixed(2);
+            document.getElementById('salesRoundOff').textContent = roundOff.toFixed(2);
+            document.getElementById('salesGrandTotal').textContent = grandTotal.toFixed(2);
+        }
+
+        function saveSale() {
+            const salesDate = document.getElementById('salesDate').value;
+            const partyId = parseInt(document.getElementById('salesParty').value);
+            const invoiceNo = document.getElementById('salesInvoiceNo').value;
+            
+            if (!salesDate || !partyId || !invoiceNo || currentSalesItems.length === 0) {
+                alert('Please fill all required fields and add at least one item');
+                return;
+            }
+
+            const party = ledgers.find(l => l.id === partyId);
+            if (!party) {
+                alert('Invalid party selected');
+                return;
+            }
+
+            const subtotal = parseFloat(document.getElementById('salesSubtotal').textContent) || 0;
+            const discount = parseFloat(document.getElementById('salesDiscount').value) || 0;
+            const freight = parseFloat(document.getElementById('salesFreight').value) || 0;
+            const taxAmount = parseFloat(document.getElementById('salesTaxAmount').textContent) || 0;
+            const roundOff = parseFloat(document.getElementById('salesRoundOff').textContent) || 0;
+            const grandTotal = parseFloat(document.getElementById('salesGrandTotal').textContent) || 0;
+
+            if (currentlyEditingId) {
+                // Update existing sale
+                const saleIndex = sales.findIndex(s => s.id === currentlyEditingId);
+                if (saleIndex !== -1) {
+                    sales[saleIndex] = {
+                        ...sales[saleIndex],
+                        date: salesDate,
+                        partyId: partyId,
+                        partyName: party.name,
+                        invoiceNo: invoiceNo,
+                        items: [...currentSalesItems],
+                        subtotal: subtotal,
+                        discount: discount,
+                        freight: freight,
+                        taxAmount: taxAmount,
+                        roundOff: roundOff,
+                        grandTotal: grandTotal
+                    };
+                    localStorage.setItem('companies', JSON.stringify(companies));
+                    renderSalesTable();
+                    clearSalesForm();
+                    currentlyEditingId = null;
+                    alert('Sale updated successfully!');
+                }
+            } else {
+                // Create new sale
+                const sale = {
+                    id: Date.now(),
+                    date: salesDate,
+                    partyId: partyId,
+                    partyName: party.name,
+                    invoiceNo: invoiceNo,
+                    items: [...currentSalesItems],
+                    subtotal: subtotal,
+                    discount: discount,
+                    freight: freight,
+                    taxAmount: taxAmount,
+                    roundOff: roundOff,
+                    grandTotal: grandTotal
+                };
+
+                sales.push(sale);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderSalesTable();
+                clearSalesForm();
+                alert('Sale saved successfully!');
+            }
+        }
+
+        function renderSalesTable() {
+            const tableBody = document.getElementById('salesTableBody');
+            tableBody.innerHTML = '';
+
+            sales.forEach((sale, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${sale.date}</td>
+                    <td>${sale.invoiceNo}</td>
+                    <td>${sale.partyName}</td>
+                    <td>${sale.subtotal.toFixed(2)}</td>
+                    <td>${sale.taxAmount.toFixed(2)}</td>
+                    <td>${sale.grandTotal.toFixed(2)}</td>
+                    <td>
+                        <button class="btn" onclick="viewSale(${sale.id})">View</button>
+                        <button class="btn" onclick="editSale(${sale.id})">Edit</button>
+                        <button class="btn" onclick="verifyPin(function() { deleteSale(${sale.id}) })">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function viewSale(id) {
+            const sale = sales.find(s => s.id === id);
+            if (!sale) return;
+
+            // Show sale details in a modal with item details
+            let itemsHTML = '<div class="item-details"><table><thead><tr><th>Item</th><th>Qty</th><th>Rate</th><th>Amount</th><th>GST Type</th><th>GST Rate</th><th>Tax Amt</th><th>Total</th></tr></thead><tbody>';
+            
+            sale.items.forEach(item => {
+                itemsHTML += `
+                    <tr>
+                        <td>${item.itemName}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.rate.toFixed(2)}</td>
+                        <td>${item.amount.toFixed(2)}</td>
+                        <td>${item.gstType === 'cgst_sgst' ? 'CGST+SGST' : 'IGST'}</td>
+                        <td>${item.gstRate}%</td>
+                        <td>${item.taxAmount.toFixed(2)}</td>
+                        <td>${item.total.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+            
+            itemsHTML += '</tbody></table></div>';
+            
+            // Create a modal to show sale details
+            const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '1000';
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.backgroundColor = 'white';
+            modalContent.style.padding = '20px';
+            modalContent.style.borderRadius = '5px';
+            modalContent.style.maxWidth = '80%';
+            modalContent.style.maxHeight = '80%';
+            modalContent.style.overflow = 'auto';
+            
+            modalContent.innerHTML = `
+                <h3>Sale Details</h3>
+                <p><strong>Date:</strong> ${sale.date}</p>
+                <p><strong>Invoice No:</strong> ${sale.invoiceNo}</p>
+                <p><strong>Party:</strong> ${sale.partyName}</p>
+                <p><strong>Subtotal:</strong> ${sale.subtotal.toFixed(2)}</p>
+                <p><strong>Tax:</strong> ${sale.taxAmount.toFixed(2)}</p>
+                <p><strong>Total:</strong> ${sale.grandTotal.toFixed(2)}</p>
+                <h4>Items</h4>
+                ${itemsHTML}
+                <button class="btn" onclick="this.parentNode.parentNode.remove()" style="margin-top: 10px;">Close</button>
+            `;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+        }
+
+        function editSale(id) {
+            verifyPin(function() {
+                const sale = sales.find(s => s.id === id);
+                if (!sale) return;
+
+                // Set form values
+                document.getElementById('salesDate').value = sale.date;
+                document.getElementById('salesParty').value = sale.partyId;
+                document.getElementById('salesInvoiceNo').value = sale.invoiceNo;
+                
+                // Set items
+                currentSalesItems = [...sale.items];
+                renderSalesItems();
+                
+                // Set summary values
+                document.getElementById('salesDiscount').value = sale.discount;
+                document.getElementById('salesFreight').value = sale.freight;
+                
+                // Calculate totals
+                calculateSalesTotal();
+                
+                // Set editing mode
+                currentlyEditingId = id;
+            });
+        }
+
+        function deleteSale(id) {
+            if (confirm('Are you sure you want to delete this sale?')) {
+                sales = sales.filter(s => s.id !== id);
+                localStorage.setItem('companies', JSON.stringify(companies));
+                renderSalesTable();
+            }
+        }
+
+        function searchSales() {
+            const searchTerm = document.querySelector('#salesForm .search-bar').value.toLowerCase();
+            const rows = document.querySelectorAll('#salesTableBody tr');
+
+            rows.forEach(row => {
+                const invoiceNo = row.cells[1].textContent.toLowerCase();
+                const party = row.cells[2].textContent.toLowerCase();
+                const total = row.cells[5].textContent.toLowerCase();
+
+                if (invoiceNo.includes(searchTerm) || party.includes(searchTerm) || total.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Load data from localStorage when page loads
+        function loadDataFromStorage() {
+            const companiesData = localStorage.getItem('companies');
+            if (companiesData) companies = JSON.parse(companiesData);
+
+            // Load saved background color
+            const bgColor = localStorage.getItem('bgColor');
+            if (bgColor) {
+                document.body.style.backgroundColor = bgColor;
+            }
+
+            // Load saved entry mode color
+            const entryModeColor = localStorage.getItem('entryModeColor');
+            if (entryModeColor) {
+                const containers = document.querySelectorAll('.container, .section-container');
+                containers.forEach(container => {
+                    container.style.backgroundColor = entryModeColor;
+                });
+            }
+
+            // Load saved feature button color
+            const featureButtonColor = localStorage.getItem('featureButtonColor');
+            if (featureButtonColor) {
+                changeFeatureButtonColor(featureButtonColor);
+            }
+
+            // Load PIN
+            appPin = localStorage.getItem('appPin');
+        }
+
+        // Initialize when page loads
+        window.onload = function() {
+            loadDataFromStorage();
+        };
+    </script>
+</body>
+</html>
